@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 
+
 class AlienInvasion:
     """Класс для управления ресурсами и поведением игры"""
 
