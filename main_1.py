@@ -17,6 +17,7 @@ class AlienInvasion:
         """Запуск основного цикла игры"""
         while True:
             # Отслеживание событий клавиатуры и мыши
+            # (цикл событий для прослушивания событий у калвиатуры и мыши)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
