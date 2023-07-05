@@ -31,7 +31,8 @@ class AlienInvasion:
         # Отображение последнего прорисованного экрана
         pygame.display.flip()
 
-    def _check_events(self):
+    @staticmethod
+    def _check_events():
         # цикл событий для отслеживания событий у клавиатуры и мыши
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
