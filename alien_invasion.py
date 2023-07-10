@@ -13,7 +13,11 @@ class AlienInvasion:
 
         # поверхность
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((self.settings.width, self.settings.height))
+        # поверхность на весь экран для любого устройства
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
+
         pygame.display.set_caption('Alien Invasion')
 
         # корабль
@@ -27,7 +31,7 @@ class AlienInvasion:
             self.ship.update()
 
     def _update_screen(self):
-        # При каждом проходе цикла перерисовывается экран
+        # При каждом проходе цикла перерисовывается экран и корабль на нем
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
 
@@ -40,12 +44,24 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = True
-
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = False
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Реагирует на нажатие клавиш"""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
 
 if __name__ == '__main__':
