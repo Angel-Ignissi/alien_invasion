@@ -29,9 +29,9 @@ class AlienInvasion:
         """Запуск основного цикла игры"""
         while True:
             self._check_events()
-            self._update_screen()
             self.ship.update()
-            self.bullets.update()
+            self._update_bullets()
+            self._update_screen()
 
     def _update_screen(self):
         # При каждом проходе цикла перерисовывается экран и объекты на нем
@@ -42,6 +42,17 @@ class AlienInvasion:
 
         # Отображение последнего прорисованного экрана
         pygame.display.flip()
+
+    def _update_bullets(self):
+        """Обновляет позиции снарядов и уничтожает старые снаряды"""
+        # Обновление позиции снарядов
+        self.bullets.update()
+
+        # Удаление снарядов, вышедших за край экрана
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        # print(len(self.bullets)) # здесь смотрим в терминале вывод кол-ва снарядов на экране сейчас
 
     def _check_events(self):
         # цикл событий для отслеживания событий у клавиатуры и мыши
